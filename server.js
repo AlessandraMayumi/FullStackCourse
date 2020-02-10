@@ -2,17 +2,18 @@ const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const indexRouter = require('./routes/index')
-const authorsRouter = require('./routes/authors')
+const authorRouter = require('./routes/authors')
+const bookRouter = require('./routes/books')
 
 const app = express()
 
-// setup
+// setup express
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
-// body-parser setup
+// setup body-parser
 app.use(bodyParser.urlencoded({ limit:'10mb', extended: false }));
 app.use(bodyParser.json());
 
@@ -30,7 +31,8 @@ mongoose.connect(uristring, {
 
 // routes
 app.use('/', indexRouter)
-app.use('/authors', authorsRouter)
+app.use('/authors', authorRouter)
+app.use('/books', bookRouter)
 
 // Listen PORT
 app.listen(process.env.PORT || 3000)
